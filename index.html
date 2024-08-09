@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>to CSV</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container">
+    <div class="row justify-content-center">
+    <div class="input-group mt-3 mb-3 d-flex justify-content-center" style="width: 50%;">
+        <input type="text" class="form-control" placeholder="Jumlah Data" id="banyakdata">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" type="button" id="tambahkan">Tambahkan</button>
+        </div>
+    </div>
+    </div>
+    <div id="tabelisian"><table id="datatable" class="table table-striped" style="width: 50%;"> </table></div>
+</div>
+
+
+<script type="text/javascript">  
+    $('#tambahkan').on('click', function(){
+      var banyak    = $('#banyakdata').val();  
+      var html      = '';
+      var len       = banyak;
+  
+  
+      for (var i = 0; i< len; i++) {
+        html += '<tr><td><input type="text"/><td><input type="text"/></td><td><input class="noExport" type="text"/></td><td><input  class="noExport" type="text"/></td><td><input class="noExport" type="text"/></td><td><input type="text"/></td></tr>';
+      }
+  
+      $('#datatable').empty();
+      $('#download').remove();
+      $('#tabelisian').prepend('<button id="download" type="button" class="btn btn-sm btn-success mb-3" onClick="export_excel()"><i class="fa fa-download"></i>  Download .csv</button>');
+      $('#datatable').append('<thead><tr><th><input type="text" value="NOMOR" disabled/></th></th><th><input type="text" value="NOP" disabled/></th><th><input class="noExport" type="text" value="TAHUN" disabled/></th><th ><input  class="noExport" type="text" value="NAMA" disabled/></th><th><input class="noExport" type="text" value="ALAMAT" disabled/></th><th><input type="text" value="JUMLAH" disabled/></th></tr></thead>');
+      $('#datatable').append(html);
+  })
+  
+  
+  function export_excel(){
+    var datarp = $("table td:last-child input").val().substring(3).split(",").join("")
+    $("table td:last-child input").val(datarp)
+    $("table").table2csv()
+      }
+      //copy paste tabel  
+  $('table').on('paste', 'input', function(e){
+    var $this = $(this);
+    $.each(e.originalEvent.clipboardData.items, function(i, v){
+      if (v.type === 'text/plain'){
+        v.getAsString(function(text){
+          var x = $this.closest('td').index(),
+          y = $this.closest('tr').index()+1,
+          obj = {};
+          text = text.trim('\r\n');
+          $.each(text.split('\r\n'), function(i2, v2){
+            $.each(v2.split('\t'), function(i3, v3){
+              var row = y+i2, col = x+i3;
+              obj['cell-'+row+'-'+col] = v3;
+              $this.closest('table').find('tr:eq('+row+') td:eq('+col+') input').val(v3);
+            });
+          });
+        });
+      }
+    }
+);
+    return false;
+  });
+  
+  // $('#datatable').find('td').each(function(){
+  //         $(this).remove();
+  //     });
+  
+  //     $('#datatable tr').each(function () {
+  //         if (!$.trim($(this).text())) $(this).remove();
+  //     });
+  </script>
+</body>
+
+
+<script>
+/**
+ * Minified by jsDelivr using Terser v5.9.0.
+ * Original file: /npm/table2csv@1.1.6/src/table2csv.js
+ *
+ * Do NOT use SRI with dynamically generated files! More information: https://www.jsdelivr.com/using-sri-with-dynamic-files
+ */
+!(function (e) {
+    "use strict";
+    const t = { filename: "Data.csv", appendTo: "body", separator: ";", newline: "\n", quoteFields: !0, trimContent: !0, excludeColumns: ".noExport", excludeRows: "" };
+    let n = {};
+    e.fn.table2csv = function (o, r) {
+        if (("object" == typeof o ? ((r = o), (o = "download")) : void 0 === o && (o = "download"), "string" != typeof o)) throw new Error('"action" argument must be a string');
+        if (void 0 !== r && "object" != typeof r) throw new Error('"options" argument must be an object');
+        n = e.extend({}, t, r);
+        const i = this.filter("table");
+        if (i.length <= 0) throw new Error("table2csv must be called on a <table> element");
+        if (i.length > 1) throw new Error("converting multiple table elements at once is not supported yet");
+        let l = (function (t) {
+            let o = "";
+            const r = t.find("tr").not(n.excludeRows),
+                i = r.first().find("td input,th input").filter(":visible").not(n.excludeColumns).length;
+            return (
+                r.each(function (t, r) {
+                    e(r)
+                        .find("td input,th input")
+                        .filter(":visible")
+                        .not(n.excludeColumns)
+                        .each(function (t, r) {
+                            const l = e(r),
+                                s = n.trimContent ? e.trim(l.val()) : l.val();
+                            (o += n.quoteFields ? '' + s.replace(/"/g, '""') + '' : s), (o += t !== i - 1 ? n.separator : n.newline);
+                        });
+                }),
+                o
+            );
+        })(i);
+        switch (o) {
+            case "download":
+                !(function (e, t) {
+                    const n = document.createElement("a");
+                    n.setAttribute("href", "data:text/csv;charset=utf-8,\ufeff" + encodeURIComponent(t)), n.setAttribute("download", e), (n.style.display = "none"), document.body.appendChild(n), n.click(), document.body.removeChild(n);
+                })(n.filename, l);
+                break;
+            case "output":
+                e(n.appendTo).append(e("<pre>").text(l));
+                break;
+            case "return":
+                return l;
+            default:
+                throw new Error('"action" argument must be one of the supported action strings');
+        }
+        return this;
+    };
+})(jQuery);
+//# sourceMappingURL=/sm/aeb6e841ee68d6b1762cd1aed7a0fc5431bb08f64b4f217cc5444231d8007fa3.map
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
+</html>
