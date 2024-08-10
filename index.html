@@ -29,21 +29,26 @@
       var len       = banyak;
   
   
-      for (var i = 0; i< len; i++) {
-        html += '<tr><td><input type="text"/><td><input type="text"/></td><td><input class="noExport" type="text"/></td><td><input  class="noExport" type="text"/></td><td><input class="noExport" type="text"/></td><td><input type="text"/></td></tr>';
+      for (var i = 0; i < len; i++) {
+        html += '<tr><td><input class="noExport" value="'+i+'" type="text" style="width: 50px;"disabled/></td><td><input type="text"/><td><input type="text"/></td><td><input class="noExport" type="text"/></td><td><input  class="noExport" type="text"/></td><td><input class="noExport" type="text"/></td><td><input type="text"/></td></tr>';
       }
   
       $('#datatable').empty();
       $('#download').remove();
       $('#tabelisian').prepend('<button id="download" type="button" class="btn btn-sm btn-success mb-3" onClick="export_excel()"><i class="fa fa-download"></i>  Download .csv</button>');
-      $('#datatable').append('<thead><tr><th><input type="text" value="NOMOR" disabled/></th></th><th><input type="text" value="NOP" disabled/></th><th><input class="noExport" type="text" value="TAHUN" disabled/></th><th ><input  class="noExport" type="text" value="NAMA" disabled/></th><th><input class="noExport" type="text" value="ALAMAT" disabled/></th><th><input type="text" value="JUMLAH" disabled/></th></tr></thead>');
+      $('#datatable').append('<thead><tr><th><input class="noExport" type="text" value="No"  style="width: 50px;" disabled/></th><th><input type="text" value="NOMOR" disabled/></th></th><th><input type="text" value="NOP" disabled/></th><th><input class="noExport" type="text" value="TAHUN" disabled/></th><th ><input  class="noExport" type="text" value="NAMA" disabled/></th><th><input class="noExport" type="text" value="ALAMAT" disabled/></th><th><input type="text" value="JUMLAH" disabled/></th></tr></thead>');
       $('#datatable').append(html);
   })
   
   
   function export_excel(){
-    var datarp = $("table td:last-child input").val().substring(3).split(",").join("").split(".").join("")
-    $("table td:last-child input").val(datarp)
+
+    $('#datatable tbody tr').each(function(element) {
+        var datarp = $(this).find("td:last-child input").val().substring(3).split(",").join("").split(".").join("")
+        $(this).find("td:last-child input").val(datarp)
+    })
+   
+   
     $("table").table2csv()
       }
       //copy paste tabel  
