@@ -42,7 +42,7 @@
   
   
   function export_excel(){
-    var datarp = $("table td:last-child input").val().substring(3).split(",").join("")
+    var datarp = $("table td:last-child input").val().substring(3).split(",").join("").split(".").join("")
     $("table td:last-child input").val(datarp)
     $("table").table2csv()
       }
