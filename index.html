@@ -30,23 +30,23 @@
   
   
       for (var i = 0; i < len; i++) {
-        html += '<tr><td><input class="noExport" value="'+i+'" type="text" style="width: 50px;"disabled/></td><td><input type="text"/><td><input type="text"/></td><td><input class="noExport" type="text"/></td><td><input  class="noExport" type="text"/></td><td><input class="noExport" type="text"/></td><td><input type="text"/></td></tr>';
+        html += '<tr><td><input class="noExport" value="'+i+'" type="text" style="width: 50px;"disabled/></td><td><input type="text"/></td><td><input type="text"/></td><td><input class="noExport"type="text"/></td><td><input type="text"/></td><td><input class="noExport"type="text"/></td><td><input class="noExport"type="text"/></td><td><input class="noExport"type="text"/></td><td><input class="noExport"type="text"/></td><td><input class="noExport"type="text"/></td><td><input class="noExport"type="text"/></td><td><input class="noExport"type="text"/></td><td><input class="noExport"type="text"/></td><td><input class="noExport"type="text"/></td><td><input class="noExport"type="text"/></td><td><input class="noExport"type="text"/></td><td><input class="noExport"type="text"/></td><td><input type="text"/></td><td><input class="noExport"type="text"/></td><td><input class="noExport"type="text"/></td><td><input class="noExport"type="text"/></td><td><input class="noExport"type="text"/></td><td><input class="noExport"type="text"/></td><td><input class="noExport"type="text"/></td><td><input class="noExport"type="text"/></td><td><input class="noExport"type="text"/></td><td><input class="noExport"type="text"/></td></tr>';
       }
   
       $('#datatable').empty();
       $('#download').remove();
       $('#tabelisian').prepend('<button id="download" type="button" class="btn btn-sm btn-success mb-3" onClick="export_excel()"><i class="fa fa-download"></i>  Download .csv</button>');
-      $('#datatable').append('<thead><tr><th><input class="noExport" type="text" value="No"  style="width: 50px;" disabled/></th><th><input type="text" value="NOMOR" disabled/></th></th><th><input type="text" value="NOP" disabled/></th><th><input class="noExport" type="text" value="TAHUN" disabled/></th><th ><input  class="noExport" type="text" value="NAMA" disabled/></th><th><input class="noExport" type="text" value="ALAMAT" disabled/></th><th><input type="text" value="JUMLAH" disabled/></th></tr></thead>');
+      $('#datatable').append('<thead><tr><th><input class="noExport" type="text" value="No." style="width: 50px;" disabled/></th><th><input type="text" value="NOMOR" disabled/></th><th><input type="text" value="NOP" disabled/></th><th><input class="noExport"type="text" value="Nama WP" disabled/></th><th><input type="text" value="Tahun Pajak" disabled/></th><th><input class="noExport"type="text" value="Tgl Jatuh Tempo" disabled/></th><th><input class="noExport"type="text" value="Alamat WP" disabled/></th><th><input class="noExport"type="text" value="Kelurahan/Desa" disabled/></th><th><input class="noExport"type="text" value="Alamat OP" disabled/></th><th><input class="noExport"type="text" value="Kecamatan OP" disabled/></th><th><input class="noExport"type="text" value="Kelurahan/Desa" disabled/></th><th><input class="noExport"type="text" value="RT OP" disabled/></th><th><input class="noExport"type="text" value="RW OP" disabled/></th><th><input class="noExport"type="text" value="Luas Bumi" disabled/></th><th><input class="noExport"type="text" value="Luas Bangunan" disabled/></th><th><input class="noExport"type="text" value="Total NJOP Bumi" disabled/></th><th><input class="noExport"type="text" value="Total NJOP Bangunan" disabled/></th><th><input type="text" value="Pokok" disabled/></th><th><input class="noExport"type="text" value="Denda" disabled/></th><th><input class="noExport"type="text" value="Total" disabled/></th><th><input class="noExport"type="text" value="Kategori Piutang 1" disabled/></th><th><input class="noExport"type="text" value="Kategori Piutang 2" disabled/></th><th><input class="noExport"type="text" value="Kategori Piutang 3" disabled/></th><th><input class="noExport"type="text" value="Kategori Piutang 4" disabled/></th><th><input class="noExport"type="text" value="Keterangan" disabled/></th><th><input class="noExport"type="text" value="NJOP Bumi Permeter" disabled/></th><th><input class="noExport"type="text" value="NJOP Bangunan Permeter" disabled/></th></tr></thead>');
       $('#datatable').append(html);
   })
   
   
   function export_excel(){
 
-    $('#datatable tbody tr').each(function(element) {
-        var datarp = $(this).find("td:last-child input").val().substring(3).split(",").join("").split(".").join("")
-        $(this).find("td:last-child input").val(datarp)
-    })
+    // $('#datatable tbody tr').each(function(element) {
+    //     var datarp = $(this).find("td:last-child input").val().substring(3).split(",").join("").split(".").join("")
+    //     $(this).find("td:last-child input").val(datarp)
+    // })
    
    
     $("table").table2csv()
